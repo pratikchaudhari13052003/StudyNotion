@@ -159,7 +159,7 @@ const Footer=()=>{
                 </div>
 
                 <div className="max-lg:mt-4 text-richblack-400">
-                Made with ❤️ CodeHelp © 2023 Studynotion
+                Made with ❤️ CodeHelp © 2025 Studynotion
                 </div>
 
             </div>
