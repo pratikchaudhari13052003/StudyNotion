@@ -14,8 +14,8 @@ import ReviewSlider from "../components/common/ReviewSlider";
 
 
 
-
 const Home=()=>{
+
 
     return(
         <div>
@@ -252,8 +252,6 @@ backgroundGradient={"bg-code-2"}
                 <ReviewSlider/>
                 
             </div>
-
-
 
 
             {/* Footer */}

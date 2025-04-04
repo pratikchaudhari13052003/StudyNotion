@@ -54,13 +54,13 @@ export async function buyCourse(token,courses,userDetails,navigate,dispatch){
             throw new Error(orderResponse.data.message)
         }
 
-        console.log("rooder",orderResponse);
+        console.log("order",orderResponse);
 
-    
+   
 
         //options
         const options ={
-            key:process.env.RAZORPAY_KEY,
+            key:"rzp_test_uhhaFg05HtdWOD",
             currency:orderResponse.data.message.currency,
             amount:`${orderResponse.data.message.amount}`,
             order_id:orderResponse.data.message.id,
