@@ -96,11 +96,6 @@ export const fetchCourseDetails = async (courseId) => {
 
 
 
-
-
-
-
-
 // fetching the available course categories
 export const fetchCourseCategories = async () => {
 

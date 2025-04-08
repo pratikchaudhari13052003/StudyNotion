@@ -5,6 +5,7 @@ const bcrypt=require("bcryptjs");
 const Profile=require("../models/Profile");
 const jwt=require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
+const otpTemplate = require("../mail/templates/emailVerificationTemplate");
 require("dotenv").config();
 
 
@@ -57,6 +58,13 @@ exports.sendOTP=async(req,res)=>{
 
     const otpBody=await OTP.create(otpPayload);
     console.log(otpBody);
+
+    const emailResponse = await mailSender(
+        email,
+        `Verification Email From StudyNotion `,
+        otpTemplate(otp)
+    )
+
 
     res.status(200).json({
         success:true,
