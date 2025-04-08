@@ -61,15 +61,17 @@ exports.sendOTP=async(req,res)=>{
 
     const emailResponse = await mailSender(
         email,
-        `Verification Email From StudyNotion `,
+        `Verification Email From StudyNotion`,
         otpTemplate(otp)
     )
+
+    console.log("email---------->",emailResponse);
 
 
     res.status(200).json({
         success:true,
         message:"OTP sent successfully",
-        otp,
+        otp
     })
 
 

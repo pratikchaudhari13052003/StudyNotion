@@ -1,15 +1,30 @@
 const nodemailer=require("nodemailer");
 
+require("dotenv").config();
+
 const mailSender=async(email,title,body)=>{
 
     try{
-        let transporter=nodemailer.createTransport({
-            host:process.env.MAIL_HOST,
-            auth:{
-                user:process.env.MAIL_USER,
-                pass:process.env.MAIL_PASS
-            }
-        })
+        // let transporter=nodemailer.createTransport({
+        //     host:process.env.MAIL_HOST,
+        //     auth:{
+        //         user:process.env.MAIL_USER,
+        //         pass:process.env.MAIL_PASS
+        //     }
+        // })
+
+        let transporter = nodemailer.createTransport({
+            host: process.env.MAIL_HOST,
+            port: 587, // or 465 for SSL
+            secure: false, // true for port 465, false for others
+            auth: {
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASS,
+            },
+            logger: true, // enables logging
+            debug: true,  // enables SMTP debug output
+        });
+        
 
        let info=await transporter.sendMail({
         from:`StudyNotion || CodeHelp - by Babbar`,
@@ -24,7 +39,8 @@ const mailSender=async(email,title,body)=>{
 
     }catch(error){
         
-        console.log(error);
+        console.log("Mail sending error:", error);
+        throw error; // Let the parent handle it
 
     }
 

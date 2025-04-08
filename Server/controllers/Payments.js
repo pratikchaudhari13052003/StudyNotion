@@ -201,12 +201,12 @@ const enrollStudents = async(courses,userId,res)=>{
         //Send mail to student
 
         const emailResponse = await mailSender(
-            enrollStudents.email,
+            enrolledStudent.email,
             `SuccessFully Enrolled into ${enrolledCourse.courseName}`,
              courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName}`)
         )
 
-        //console.log("Email Sent Successfully",emailResponse.response);
+        console.log("Email Sent Successfully-------->",emailResponse);
     }
 
     }catch(error){
