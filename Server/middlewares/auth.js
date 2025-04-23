@@ -9,7 +9,6 @@ exports.auth = async(req,res,next)=>{
 
    
     try{
-
         //Extract Token
 
         const token=req.cookies.token || 

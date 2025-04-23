@@ -53,6 +53,7 @@ exports.capturePayment  = async(req,res)=>{
             }
 
             totalAmount += course.price;
+            console.log("Hello reach rhee");
 
         }catch(error){
 
@@ -84,6 +85,8 @@ exports.capturePayment  = async(req,res)=>{
             message:paymentResponse
         })
 
+       
+
 
     }catch(error){
 
@@ -110,6 +113,8 @@ exports.verifyPayment = async(req,res)=>{
     const courses = req.body?.courses;
     const userId = req.user.id;
 
+    console.log("abover herer");
+
 
     if(!razorpay_order_id || 
        !razorpay_payment_id || 
@@ -121,6 +126,8 @@ exports.verifyPayment = async(req,res)=>{
             message:"Payment Failed"
         })
     }
+
+    console.log("below herer");
 
 
     let body = razorpay_order_id + "|" +razorpay_payment_id;
@@ -145,7 +152,7 @@ exports.verifyPayment = async(req,res)=>{
 
     }
 
-
+    
     return res.status(200).json({
         success:"false",
         message:"Payment Failed"

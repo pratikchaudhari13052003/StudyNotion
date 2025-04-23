@@ -37,6 +37,7 @@ export async function buyCourse(token,courses,userDetails,navigate,dispatch){
 
     try{
         //load the script
+        
         const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
 
         if(!res){
@@ -44,33 +45,38 @@ export async function buyCourse(token,courses,userDetails,navigate,dispatch){
             return;
         }
 
+       
+        
+
         //initiate the order
         const orderResponse = await apiConnector("POST",COURSE_PAYMENT_API,
             {courses},{
                 Authorization:`Bearer ${token}`
             });
 
+
         if(!orderResponse.data.success){
             throw new Error(orderResponse.data.message)
         }
 
         console.log("order",orderResponse);
-
-   
+        
 
         //options
         const options ={
             key:"rzp_test_uhhaFg05HtdWOD",
             currency:orderResponse.data.message.currency,
-            amount:`${orderResponse.data.message.amount}`,
+            amount: orderResponse.data.message.amount,
             order_id:orderResponse.data.message.id,
             name:"StudyNotion",
             description:"Thank you for purchasing the course",
             image:rzpLogo,
             prefill:{
                 name:`${userDetails.firstName}`,
-                email:userDetails.email
+                email:`${userDetails.email}`,
+                contact: "9664815944"
             },
+                            
             handler:function(response){
                 //send success mail
                 sendPaymentSucessEmail(response,orderResponse.data.message.amount,token);
@@ -80,14 +86,22 @@ export async function buyCourse(token,courses,userDetails,navigate,dispatch){
             }
         }
 
+
+        console.log("you are hererwe");
         const paymentObject = new window.Razorpay(options);
 
+        console.log("no---");
         paymentObject.open();
 
-        paymentObject.on("payment failed",function(response){
+       console.log("her----");
+
+        paymentObject.on("payment.failed",function(response){
+            console.log("Razorpay Payment Error:", JSON.stringify(response.error, null, 2));
             toast.error("Oops Payment Failed")
-            console.log(response.error);
+            console.log(response.error);   
         })
+
+       console.log("byeeee");
 
 
 
@@ -107,6 +121,8 @@ async function sendPaymentSucessEmail(response,amount,token){
 
     try{
 
+        console.log("erherhe");
+
         await apiConnector("POST",SEND_PAYMENT_SUCCESS_EMAIL_API,{
             orderId:response.razorpay_order_id,
             paymentId:response.razorpay_payment_id,
@@ -114,6 +130,8 @@ async function sendPaymentSucessEmail(response,amount,token){
         },{
             Authorization: `Bearer ${token}`
         })
+
+        console.log("no way u amcoiming");
 
     }catch(error){
         
