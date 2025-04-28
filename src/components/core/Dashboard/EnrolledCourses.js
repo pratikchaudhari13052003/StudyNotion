@@ -32,7 +32,7 @@ const EnrolledCourses = ()=>{
 
     useEffect(()=>{
 
-        getEnrolledCourses();
+      getEnrolledCourses();
 
 
     },[]);

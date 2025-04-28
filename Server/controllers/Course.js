@@ -148,6 +148,10 @@ exports.editCourse = async (req, res) => {
 	  return res.status(404).json({ error: "Course not found" })
 	}
 
+	// Save the old category ID
+    const oldCategoryId = course.category.toString();
+
+
 	// If Thumbnail Image is found, update it
 	if (req.files) {
 	  console.log("thumbnail update")
@@ -170,7 +174,30 @@ exports.editCourse = async (req, res) => {
 	  }
 	}
 
-	await course.save()
+	await course.save();
+
+
+	//changes here
+	const newCategoryId = course.category.toString();
+    // If category changed, update both old and new category
+    if (oldCategoryId !== newCategoryId) {
+      // Remove from old category
+      await Category.findByIdAndUpdate(
+        oldCategoryId,
+        { $pull: { courses: courseId } },
+        { new: true }
+      );
+
+      // Add to new category
+      await Category.findByIdAndUpdate(
+        newCategoryId,
+        { $push: { courses: courseId } },
+        { new: true }
+      );
+    }
+
+	//Till here
+
 
 	const updatedCourse = await Course.findOne({
 	  _id: courseId,
